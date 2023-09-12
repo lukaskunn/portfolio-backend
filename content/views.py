@@ -1,13 +1,12 @@
 from django.http import JsonResponse
 from content.models import Content, Landing, SectSubtitle
-import json
+
 # Create your views here.
 def getContent(request):
     allContent = Content.objects.all()
     language = {}
     
     for index, content in enumerate(allContent):
-        # print(content)
         language[content.lang_code] = {}
         language[content.lang_code]["landing"] = {"sectionTitle": content.landing.sect_title, "subtitle": []}
         
@@ -22,15 +21,12 @@ def getContent(request):
         language[content.lang_code]["contact"] = {"sectionTitle": content.contact.title,"headerTitle": content.contact.header_title, "contacts": []}
         
         for subtitles in content.landing.sect_subtitle.all():
-            # TODO ADJUST ALL TEXTS TO DECODE UNICODE
-            # print(dir(subtitles.value[0]))
-            # print(subtitles.value.encode().decode())
             language[content.lang_code]["landing"]["subtitle"].append(subtitles.value)
         
         for about_contents in content.about.about_sect.all():
             texts = []
-            for about_contents_text in about_contents.about_content_texts.all():
-                texts.append(about_contents_text.text)
+            for about_content_texts in about_contents.about_content_texts.all():
+                texts.append(about_content_texts.text)
             language[content.lang_code]["aboutMe"]["content"].append({"title": about_contents.text, "text": texts})
             
         for card in content.resume.resume_cards.all():
@@ -59,7 +55,7 @@ def getContent(request):
         for contact in content.contact.contacts.all():
             language[content.lang_code]["contact"]["contacts"].append({"type": contact.type, "linkText": contact.link_text, "urlLink": contact.url_link})
 
-    response = JsonResponse(language)
+    response = JsonResponse(language, safe=False, json_dumps_params={'ensure_ascii': False})
     
     response["Access-Control-Allow-Origin"] = "*"
     response["Access-Control-Allow-Methods"] = "GET, OPTIONS"
