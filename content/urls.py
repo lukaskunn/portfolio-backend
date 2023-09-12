@@ -1,6 +1,6 @@
 from django.urls import path
-from content.views import getContent
+from content.views import GetContent
 
 urlpatterns = [
-    path('',  getContent),
+    path('',  GetContent.as_view()),
 ]
