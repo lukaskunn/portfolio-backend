@@ -63,14 +63,3 @@ def getContent(request):
     response["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
     
     return response
-
-def saveNewContent(request):
-    content = Content.objects.create(lang_code="en")
-    landing = Landing.objects.create(content=content, sect_title="Lucas Oliveira")
-    subtitle1 = SectSubtitle.objects.create(value="daora 1", landing=landing)
-    subtitle2 = SectSubtitle.objects.create(value="daora 2", landing=landing)
-    subtitle3 = SectSubtitle.objects.create(value="daora 3", landing=landing)
-    
-    subtitle1.save()
-    subtitle2.save()
-    subtitle3.save()

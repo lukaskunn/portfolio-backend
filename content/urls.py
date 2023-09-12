@@ -1,7 +1,6 @@
 from django.urls import path
-from content.views import getContent, saveNewContent
+from content.views import getContent
 
 urlpatterns = [
     path('',  getContent),
-    path('save-new-content',  saveNewContent),
 ]
