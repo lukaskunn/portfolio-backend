@@ -156,12 +156,12 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
     'https://www.lucasoliveira.io'
 ] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
 CORS_ALLOWED_ORIGIN_REGEXES = [
     'http://localhost:3000',
-    "http://127.0.0.1:3000"
+    "http://127.0.0.1:3000",
     'https://www.lucasoliveira.io'
 ]
 
