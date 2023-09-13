@@ -11,16 +11,28 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path, os 
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+load_dotenv()
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
+DATABASE_NAME=str(os.getenv('DATABASE_NAME')),
+DATABASE_USER_NAME=str(os.getenv('DATABASE_USER_NAME')),
+DATABASE_PASSWORD=str(os.getenv('DATABASE_PASSWORD')),
+DATABASE_HOST=str(os.environ['DATABASE_HOST']),
+DATABASE_PORT=os.getenv('DATABASE_PORT')
+
+db_name = DATABASE_NAME[0]
+db_user_name = DATABASE_USER_NAME[0]
+db_password = DATABASE_PASSWORD[0]
+db_host = DATABASE_HOST[0]
+db_port = DATABASE_PORT
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -88,8 +100,12 @@ WSGI_APPLICATION = 'setup.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_name,
+        'USER': db_user_name,
+        'PASSWORD': db_password,
+        'HOST': db_host,
+        'PORT': db_port,
     }
 }
 
@@ -154,15 +170,6 @@ REST_FRAMEWORK = {
 
 AUTH_USER_MODEL = 'users.CustomUser'
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-    "http://127.0.0.1:3000",
-    'https://www.lucasoliveira.io'
-] # If this is used, then not need to use `CORS_ALLOW_ALL_ORIGINS = True`
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    'http://localhost:3000',
-    "http://127.0.0.1:3000",
-    'https://www.lucasoliveira.io'
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding', 'content-type', 'accept', 'origin', 'authorization', 'api-secret', 'api-key')
